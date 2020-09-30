@@ -13,16 +13,18 @@ if __name__ == '__main__':
     if len(sys.argv) != 7:
         sys.exit('Incorrect number of args')
     try:
-        objects_num, badge_volume = map(int, sys.argv[1:3]) 
-        values_type = int if sys.argv[3] == 'int' else float
-        max_weight, max_cost = map(values_type, sys.argv[4:6])
+        objects_num = int(sys.argv[1])
+        badge_capacity = float(sys.argv[2])
+        values_type = lambda x: (round(x) if sys.argv[3] == 'int' else float(x))
+        badge_capacity = values_type(badge_capacity)
+        max_weight, max_cost = map(float, sys.argv[4:6])
         max_weight, max_cost = max(1, max_weight), max(max_cost, 2)
         file_name = sys.argv[-1]
         with open(file_name, 'w') as file_handler:
-            file_handler.write(f'{objects_num} {badge_volume}\n')
+            file_handler.write(f'{objects_num} {badge_capacity}\n')
             for _ in range(objects_num):
-                current_weight = values_type(random.random() * max_weight) % (max_weight) + 1 # only non zero values
-                current_cost = values_type(random.random() * max_cost) % (max_cost - 1) + 2  # values bigger than 2
+                current_weight = values_type(random.uniform(1, max_weight)) # only non zero values
+                current_cost = values_type(random.uniform(2, max_cost)) # values bigger than 2
                 file_handler.write(f'{current_weight} {current_cost}\n')
     except Exception: 
         sys.exit('Sorry, but something went wrong')

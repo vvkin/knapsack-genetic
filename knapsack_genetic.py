@@ -15,7 +15,10 @@ class KnapsackSolver(object):
     def __parse_file(self, file_name: str) -> None:
         """Parse file with input for knapsack problem"""
         file_handler = open(file_name, 'r')
-        self.items_num, self.capacity = map(int, file_handler.readline().split())
+        f_values = file_handler.readline().split()
+
+        self.items_num = np.int(f_values[0])
+        self.capacity = np.float(f_values[1])
 
         self.weights = np.zeros(self.items_num, np.float)
         self.costs = np.zeros(self.items_num, np.float)
